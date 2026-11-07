@@ -59,6 +59,7 @@ Geliştirme için:
 
 - `./gradlew runClient -Pshots` arayüzü test eder ve ekran görüntüsü alır.
 - `./gradlew runServer` yerel bir test sunucusu açar.
+- `./gradlew runClient -Ppause` o sunucuya girer ve ESC menüsündeki kartı test eder.
 - `./gradlew prodBotTest` botu o sunucuya karşı, oyuncuların kullandığı haliyle test eder.
 
 ## Lisans

@@ -26,6 +26,7 @@ public final class ChickenAfk implements ClientModInitializer {
 		Bots.tick();
 		DevShots.tick(mc);
 		BotTest.tick(mc);
+		PauseTest.tick(mc);
 		while (Keys.OPEN_PANEL.consumeClick()) {
 			if (mc.screen == null) {
 				mc.setScreen(new PanelScreen(null));

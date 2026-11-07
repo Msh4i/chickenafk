@@ -6,6 +6,7 @@
 		"ClientPacketListenerMixin",
 		"MinecraftMixin",
 		"OptionsMixin",
+		"PauseScreenMixin",
 		"TitleScreenMixin"
 	],
 	"injectors": {

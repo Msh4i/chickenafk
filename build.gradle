@@ -22,6 +22,11 @@ loom {
 			if (project.hasProperty("lab")) {
 				vmArg "-Dchickenafk.lab=${project.property('lab')}"
 			}
+			// ./gradlew runClient -Ppause : join the local test server and check the Esc menu card (runServer first)
+			if (project.hasProperty("pause")) {
+				vmArg "-Dchickenafk.pausetest=true"
+				programArgs "--quickPlayMultiplayer", "localhost:25599"
+			}
 			// ./gradlew runClient -Pbottest : bots against the local test server (start it with runServer first)
 			if (project.hasProperty("bottest")) {
 				vmArg "-Dchickenafk.bottest=true"
