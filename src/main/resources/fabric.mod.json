@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "chickenafk",
+	"version": "${version}",
+	"name": "ChickenAFK",
+	"description": "Run AFK accounts on chickennw from an in-game panel: inventory, menus, chat and shard counts. Unofficial: not affiliated with or endorsed by chickennw.",
+	"authors": [
+		"MsHai"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/chickenafk",
+		"sources": "https://github.com/Msh4i/chickenafk",
+		"issues": "https://github.com/Msh4i/chickenafk/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/chickenafk/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"dev.chickenafk.ChickenAfk"
+		]
+	},
+	"mixins": [
+		"chickenafk.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-resource-loader-v1": "*"
+	}
+}

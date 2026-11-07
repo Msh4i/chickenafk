@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "dev.chickenafk.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ClientPacketListenerMixin",
+		"MinecraftMixin",
+		"OptionsMixin",
+		"TitleScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

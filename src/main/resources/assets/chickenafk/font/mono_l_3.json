@@ -1,0 +1,5 @@
+{
+  "providers": [
+    {"type": "ttf", "file": "chickenafk:geistmono-medium.ttf", "size": 44, "oversample": 2.5, "shift": [0, 18.7]}
+  ]
+}

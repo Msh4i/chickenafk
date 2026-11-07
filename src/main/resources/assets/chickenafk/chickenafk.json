@@ -1,0 +1,181 @@
+{
+  "makrolar": [
+    {
+      "ad": "SMP — Giriş",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "mesaj"
+      },
+      "kosul": {
+        "regex": "\\/gir\\b(?![a-zçğıöşü]).*komutunu kullanarak giri[şs]"
+      },
+      "aksiyon": [
+        {
+          "tip": "eger",
+          "kosul": {
+            "son-komut-icermez": {
+              "metin": "/gir",
+              "sure": "90s"
+            }
+          },
+          "aksiyon": [
+            {
+              "tip": "bekle",
+              "sure": "2500ms",
+              "sapma": "500ms"
+            },
+            {
+              "tip": "komut",
+              "metin": "/gir {{sifre}}"
+            },
+            {
+              "tip": "yaz",
+              "metin": "Şifre gönderildi (/gir)."
+            }
+          ],
+          "degilse": [
+            {
+              "tip": "yaz",
+              "metin": "Şifre son 90 sn'de gönderilmişti — tekrarlanmadı (deneme hakkı yanmasın)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ad": "SMP — Katıl",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "aralik",
+        "sure": "12s",
+        "sapma": "3s"
+      },
+      "kosul": {
+        "bagli": "evet",
+        "bayrak-yok": "smp-de",
+        "son-mesaj-icermez": {
+          "metin": "giris yapin",
+          "sure": "12s"
+        },
+        "son-komut-icermez": {
+          "metin": "/joinq",
+          "sure": "12s"
+        }
+      },
+      "aksiyon": [
+        {
+          "tip": "yaz",
+          "metin": "SMP'ye katılınıyor (/joinq smp-spawn)."
+        },
+        {
+          "tip": "komut",
+          "metin": "/joinq smp-spawn"
+        },
+        {
+          "tip": "bayrak-koy",
+          "ad": "smp-de"
+        }
+      ]
+    },
+    {
+      "ad": "SMP — AFK menüsünü aç",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "aralik",
+        "sure": "15s",
+        "sapma": "4s"
+      },
+      "kosul": {
+        "bagli": "evet",
+        "bayrak": "smp-de",
+        "bayrak-yok": "smp-afkte",
+        "son-komut-icermez": {
+          "metin": "/afk",
+          "sure": "10s"
+        }
+      },
+      "aksiyon": [
+        {
+          "tip": "yaz",
+          "metin": "AFK değilim — /afk menüsü açılıyor."
+        },
+        {
+          "tip": "komut",
+          "metin": "/afk"
+        }
+      ]
+    },
+    {
+      "ad": "SMP — AFK alanına tıkla",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "menu-acildi"
+      },
+      "kosul": {
+        "menu-item-var": "lime_concrete"
+      },
+      "aksiyon": [
+        {
+          "tip": "yaz",
+          "metin": "AFK menüsü açıldı — yeşil alana (lime_concrete) tıklanıyor."
+        },
+        {
+          "tip": "bekle",
+          "sure": "600ms",
+          "sapma": "300ms"
+        },
+        {
+          "tip": "item-tikla",
+          "isim-icerir": "lime_concrete"
+        }
+      ]
+    },
+    {
+      "ad": "SMP — AFK onayı",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "mesaj"
+      },
+      "kosul": {
+        "icerir": "afk bolgesine"
+      },
+      "aksiyon": [
+        {
+          "tip": "bayrak-koy",
+          "ad": "smp-afkte"
+        },
+        {
+          "tip": "yaz",
+          "metin": "AFK bölgesindeyim — ödül sayacı başladı."
+        }
+      ]
+    },
+    {
+      "ad": "SMP — Bağlantı sıfırla",
+      "acik": true,
+      "klasor": "chickennw SMP",
+      "tetik": {
+        "tip": "baglanti-koptu"
+      },
+      "aksiyon": [
+        {
+          "tip": "bayrak-sil",
+          "ad": "smp-de"
+        },
+        {
+          "tip": "bayrak-sil",
+          "ad": "smp-afkte"
+        },
+        {
+          "tip": "yaz",
+          "metin": "Bağlantı koptu — sıfırlandı, yeniden girilecek."
+        }
+      ]
+    }
+  ]
+}

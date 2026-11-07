@@ -1,0 +1,115 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+loom {
+	runs {
+		client {
+			programArgs "--username", "MsHai", "--width", "1600", "--height", "900"
+			// ./gradlew runClient -Pshots : screenshot the UI into run/screenshots and quit
+			if (project.hasProperty("shots")) {
+				vmArg "-Dchickenafk.shots=true"
+				vmArg "-Dchickenafk.fakeupdate=0.2.0"
+			}
+			// ./gradlew runClient -Plab=sit : one pose from four cameras
+			if (project.hasProperty("lab")) {
+				vmArg "-Dchickenafk.lab=${project.property('lab')}"
+			}
+			// ./gradlew runClient -Pbottest : bots against the local test server (start it with runServer first)
+			if (project.hasProperty("bottest")) {
+				vmArg "-Dchickenafk.bottest=true"
+				vmArg "-Dchickenafk.server=localhost:25599"
+			}
+		}
+		server {
+			// a throwaway offline-mode server for the bot test; see prepareTestServer
+			runDir "run-server"
+			programArgs "nogui"
+		}
+	}
+}
+
+// Mods for the production-style test run: the published (obfuscated-name) Fabric API, like a player has.
+configurations {
+	prodMods {
+		transitive = false
+	}
+}
+dependencies {
+	prodMods "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+// ./gradlew prodBotTest : the bot test inside a normal (obfuscated) game with the remapped jar, as players
+// run it. Dev runs use readable names, so this is the run that catches name-dependent code.
+tasks.register("prodBotTest", net.fabricmc.loom.task.prod.ClientProductionRunTask) {
+	mods.from(tasks.named("remapJar"))
+	mods.from(configurations.prodMods)
+	jvmArgs.addAll("-Dchickenafk.bottest=true", "-Dchickenafk.server=localhost:25599")
+	runDir = layout.projectDirectory.dir("run-prod")
+}
+
+// Writes the test server's settings: offline mode, flat world, RCON for the bot test.
+tasks.register("prepareTestServer") {
+	def dir = layout.projectDirectory.dir("run-server").asFile
+	doLast {
+		dir.mkdirs()
+		new File(dir, "eula.txt").text = "eula=true\n"
+		new File(dir, "server.properties").text = """\
+online-mode=false
+enforce-secure-profile=false
+server-port=25599
+enable-rcon=true
+rcon.port=25598
+rcon.password=chickenafk-test
+level-type=minecraft\\:flat
+generate-structures=false
+spawn-protection=0
+view-distance=3
+simulation-distance=3
+spawn-monsters=false
+spawn-animals=false
+motd=ChickenAFK test
+""".stripIndent()
+	}
+}
+tasks.named("runServer") { dependsOn("prepareTestServer") }
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	// Needed at runtime only: Fabric API's resource loader is what makes our fonts, textures and lang files load.
+	modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_chickenafk" }
+	}
+}

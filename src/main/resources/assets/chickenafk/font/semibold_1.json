@@ -1,0 +1,5 @@
+{
+  "providers": [
+    {"type": "ttf", "file": "chickenafk:geist-semibold.ttf", "size": 13, "oversample": 1.0, "shift": [0, 0]}
+  ]
+}

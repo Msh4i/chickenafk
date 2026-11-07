@@ -1,0 +1,5 @@
+{
+  "providers": [
+    {"type": "ttf", "file": "chickenafk:geist-regular.ttf", "size": 13, "oversample": 1.4, "shift": [0, 0]}
+  ]
+}
